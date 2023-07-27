@@ -43,10 +43,16 @@ function stop(){
     for(let i=0;i<song.length;i++){
         song[i].pause()
     }
+    
     audio_tr.pause()  ;
     video.pause();
+    bl.pause();
+    video_2.pause();
+    // fi_v.pause()
     audio_ch.pause();
     video_lst.pause()
+
+    w33.innerHTML=te_w33
 }
 
 
@@ -780,13 +786,20 @@ function handleTouch(event) {
 
 //  ////// last pre keyyyyyyyyyyyyyyyyyyyyyyyy............................................
 let w6=document.querySelector(".w6")
-
+var video = document.getElementById("video_lt");
 w6.addEventListener("click", function() {
     // alert("sa")
-    var video_ = document.getElementById("video");
-    video_.play();
+ 
+    video.play();
 });
 
+let w66=document.querySelector(".w5")
+var video_2 = document.getElementById("video_ltt");
+w66.addEventListener("click", function() {
+    // alert("sa")
+ 
+    video_2.play();
+});
 
 
 ///// last key.......
@@ -794,9 +807,10 @@ let w7=document.querySelector(".w7");
 let ct_con=document.querySelector(".ct_con")
 let video_lst = document.getElementById("video_lst");
 let ct=4;
+let bl=new Audio("song/bl.mp3")
 w7.addEventListener("click", function() {
     console.log("igcdcui");
-    let bl=new Audio("song/bl.mp3")
+  
     console.log()
     bl.play()
     
@@ -837,13 +851,94 @@ function celeb() {
         video_lst.play()
         
         clearTimeout(pop_v)
-    },3600)
+    },3500)
 
     
     let pop_dis_t=setTimeout(()=>{
         can_va.style="display:none";
         clearTimeout(pop_t)
+
     },3500)
 
 }
 
+/////img_diiii
+
+let im_di=document.querySelectorAll(".im_di");
+let im_di_con=document.querySelector(".im_di_con");
+let q_fl={
+    1: 'GREEN,RED',
+    2: 'VIJAY,RAJINI ',
+    3: 'ASHOK SELVAN,HARISH KALYAN',
+    4: 'BLUE LAYS,RED LAYS',
+    5:'UG,PG',
+    6:'FICTION,NON-FICTION',
+    7:'RUGGED,CHOCO GIRL',
+    8:'DAYSCHOLAR,HOSTELLER_LIFE',
+    9:'KEYBOARD,FLUTE'
+}
+let re_co=0;
+let answers=['GREEN','RAJINI','ASHOK SELVAN','BLUE LAYS','PG','NON-FICTION','CHOCO GIRL','HOSTELLER_LIFE','FLUTE']
+let wrn_ans=['RED','VIJAY','HARISH KALYAN','RED LAYS','UG','FICTION','RUGGED','DAYSCHOLAR','KEYBOARD']
+let temp_html=im_di_con.innerHTML;
+function ques_fl(no){
+    let data=q_fl[no].split(",")
+
+    im_di_con.innerHTML=`
+            <p class="ch_o">choose one</p>
+            <div>
+            <button class="ques_butt" onclick=res_(this) >${data[0]}</button>
+           <button class="ques_butt" onclick=res_(this) >${data[1]}</button>
+           </div>
+    `
+
+}
+var reveal = [];
+function res_(butt_){
+    console.log(butt_.innerText)
+    console.log(reveal)
+   
+    if(answers.includes(butt_.innerText)){
+        let ans_in=answers.indexOf(butt_.innerText)
+       
+       
+        im_di_con.innerHTML=temp_html;
+        let im_di=document.querySelectorAll(".im_di");
+        if(re_co>0){
+            for(let i=0;i<reveal.length;i++){
+                im_di[reveal[i]].style="display:none";
+                console.log("sakr")
+            }
+        }
+        im_di[ans_in].classList.add("yes")
+        reveal.push(ans_in)
+        re_co++;
+        console.log(ans_in)
+        console.log(re_co)
+        
+      
+    }
+    else{
+        im_di_con.innerHTML=temp_html;
+         let ans_in=wrn_ans.indexOf(butt_.innerText)
+       
+        let im_di=document.querySelectorAll(".im_di");
+        if(re_co!=0){
+            for(let i=0;i<reveal.length;i++){
+                im_di[reveal[i]].style="display:none";
+            }
+        }
+        im_di[ans_in].classList.add("wrn")
+    }
+    
+}
+let fi_v=document.querySelector(".fi_v")
+let vd=['img/vd1.mp4','img/vd2.mp4','img/vd3.mp4']
+let w33=document.querySelector(".w33")
+var te_w33=w33.innerHTML;
+function vid(n){
+    w33.innerHTML=`<video class="fi_v" autoplay controls>
+                         <source  src="${vd[n-1]}" type="video/mp4">
+                </video>`
+    
+}
